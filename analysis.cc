@@ -48,11 +48,7 @@ struct scenario_t{
     uint32_t read0;
     uint32_t write0;
     uint32_t write1;
-    uint32_t read0d;
-    uint32_t read1d;
-    uint32_t fail0;
-    uint32_t fail1;
-    uint32_t total_inactive;
+    uint32_t wb;
     vector<flow_instance_t> active_t;
     
     scenario_t(){
@@ -60,11 +56,7 @@ struct scenario_t{
         read1=0;
         write0=0;
         write1=0;
-        read0d=0;
-        read1d=0;
-        fail0=0;
-        fail1=0;
-        total_inactive=0;
+        wb=0;
     }
     
 };
@@ -107,10 +99,8 @@ void print_scenario(const vector<lpn_t*> flow_spec, const scenario_t& sce)
     flow_inst_cnt.push_back(sce.read0);
     flow_inst_cnt.push_back(sce.write1);
     flow_inst_cnt.push_back(sce.read1);
-    flow_inst_cnt.push_back(sce.read0d);
-    flow_inst_cnt.push_back(sce.read1d);
-    flow_inst_cnt.push_back(sce.fail0);
-    flow_inst_cnt.push_back(sce.fail1);
+    flow_inst_cnt.push_back(sce.wb);
+    
     
     for (uint32_t i = 0; i < scen.size(); i++) {
         const flow_instance_t& f = scen.at(i);
@@ -137,6 +127,7 @@ void print_scenario(const vector<lpn_t*> flow_spec, const scenario_t& sce)
     
     cout << "***  # of flow instances:" << endl;
     for (uint32_t i = 0; i < flow_inst_cnt.size(); i++) {
+        cout<<"before f"<<endl;
         lpn_t* flow = flow_spec.at(i);
         cout << "\t" << flow->get_flow_name() << ": \t" << flow_inst_cnt.at(flow->get_index()) << endl;
     }
@@ -216,15 +207,15 @@ int main(int argc, char *argv[]) {
     
     
     flow_spec.push_back(cpu0_read);
-    cpu0_read->set_index(1);
+    cpu0_read->set_index(0);
     flow_spec.push_back(cpu1_read);//write1
-    cpu1_read->set_index(2);
+    cpu1_read->set_index(1);
     flow_spec.push_back(cpu0_write);
-    cpu0_write->set_index(3);
+    cpu0_write->set_index(2);
     flow_spec.push_back(cpu1_write);
-    cpu1_write->set_index(4);
+    cpu1_write->set_index(3);
     flow_spec.push_back(write_back);
-    write_back->set_index(5);
+    write_back->set_index(4);
     
     
     vector<uint32_t> flow_inst_cnt;
@@ -379,21 +370,16 @@ int main(int argc, char *argv[]) {
                     if(cfg_str=="16" ||cfg_str=="17" || cfg_str=="31")
                     {
                         if(flow_index==0)
-                            new_scenario.write0++;
+                            new_scenario.read0++;
                         else if(flow_index==1)
                             new_scenario.read0++;
                         else if(flow_index==2)
-                            new_scenario.write1++;
+                            new_scenario.write0++;
                         else if(flow_index==3)
-                            new_scenario.read1++;
+                            new_scenario.write1++;
                         else if(flow_index==4)
-                            new_scenario.read0d++;
-                        else if(flow_index==5)
-                            new_scenario.read1d++;
-                        else if(flow_index==6)
-                            new_scenario.fail0++;
-                        else if(flow_index==7)
-                            new_scenario.fail1++;
+                            new_scenario.wb++;
+                        
                         new_scenario.active_t.erase(new_scenario.active_t.begin()+i);
                     }
                     
