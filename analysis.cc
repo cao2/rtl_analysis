@@ -127,7 +127,6 @@ void print_scenario(const vector<lpn_t*> flow_spec, const scenario_t& sce)
     
     cout << "***  # of flow instances:" << endl;
     for (uint32_t i = 0; i < flow_inst_cnt.size(); i++) {
-        cout<<"before f"<<endl;
         lpn_t* flow = flow_spec.at(i);
         cout << "\t" << flow->get_flow_name() << ": \t" << flow_inst_cnt.at(flow->get_index()) << endl;
     }
@@ -217,7 +216,6 @@ int main(int argc, char *argv[]) {
     flow_spec.push_back(write_back);
     write_back->set_index(4);
     
-    
     vector<uint32_t> flow_inst_cnt;
     flow_inst_cnt.push_back(0);
     flow_inst_cnt.push_back(0);
@@ -230,20 +228,21 @@ int main(int argc, char *argv[]) {
     
     vector<message_t> trace;
     
-    uint32_t srcs[18]={ cpu0 , cpu1 , cache0 , cache1 , cache0 , cache1 , membus , membus , cache0 , cache1 , membus , membus , cache0 , cache1 , membus , mem , membus,mem };
-    uint32_t dests[18]={ cache0 , cache1 , cpu0 , cpu1 , membus , membus , cache0 , cache1 , membus , membus , membus , membus , cache0 , cache1 , mem , membus , mem ,membus};
+    uint32_t srcs[18]={ cpu0 ,      cpu1 ,      cache0 ,    cache1 ,    cache0 ,    cache1 ,    membus ,    membus ,    cache0 ,    cache1 , membus , membus , cache0 , cache1 , membus , mem , membus,mem };
+    uint32_t dests[18]={ cache0 ,   cache1 ,    cpu0 ,      cpu1 ,      membus ,    membus ,    cache0 ,    cache1 ,    membus ,    membus , cache0 , cache1 , membus , membus , mem , membus , mem ,membus};
     // Open input trace file
     ifstream trace_file(argv[1]);
     if (trace_file.is_open()) {
         std::string line;
         message_t new_msg;
         int pl[17];
+        int linenm=0;
         while (getline(trace_file, line)){
             // From each line, get the message information to create a new msg.
-            for (int mm=0; mm<17; mm++) {
-                pl[mm]=0;
-            }
+            //cout<<"line "<<linenm<<endl;
+            linenm++;
             uint32_t state=0;
+            
             for (uint32_t i = 0; i < line.size(); i++)
                 if (line.at(i) == ',') {
                     pl[state] = i;
@@ -252,8 +251,8 @@ int main(int argc, char *argv[]) {
             new_msg.addr = NDEF;
             
             uint32_t j =0;
-            string tmp_str = line.substr(0, pl[0]);
-            //cout<<"part, lala "<<tmp_str<<endl;
+            string tmp_str = line.substr(0, 52);
+            //cout<<"0:"<<tmp_str<<endl;
             if (tmp_str.at(0)=='1'){
                 new_msg.src = cpu0;
                 new_msg.dest = cache0;
@@ -262,13 +261,16 @@ int main(int argc, char *argv[]) {
                     new_msg.cmd = rd;
                 else
                     new_msg.cmd = wt;
-                cout<<"cmd: "<<new_msg.cmd<<endl;
+                //cout<<"0: cmd: "<<new_msg.cmd<<endl;
                 trace.push_back(new_msg);
+                
             }
 
             for (j=1; j<17; j++) {
-                tmp_str = line.substr(pl[j-1]+1,52);
-                //cout<<"inside : "<<j <<" "<<tmp_str<<endl;
+                tmp_str = line.substr(pl[j-1]+2,52);
+                if (j==14 or j==15)
+                    tmp_str = tmp_str.substr(1,52);
+                //cout<<"inside : "<<j <<":"<<tmp_str<<endl;
                 if (tmp_str.at(0)=='1'){
                     new_msg.src = srcs[j];
                     new_msg.dest=dests[j];
@@ -280,7 +282,7 @@ int main(int argc, char *argv[]) {
                         new_msg.cmd=rd;
                     else
                         new_msg.cmd=wt;
-                    //cout<<"cmd: "<<new_msg.cmd<<endl;
+                    //cout<<j<<": cmd: "<<new_msg.cmd<<endl;
                     trace.push_back(new_msg);
                 }
             }
@@ -559,7 +561,7 @@ lpn_t* build_cpu1_read(void){
     msg24.pre_cfg = (1<<3);
     msg24.post_cfg = (1<<4);
     msg24.src = cache0;
-    msg24.dest = cpu0;
+    msg24.dest = membus;
     msg24.cmd = snp;
     msg24.addr = NDEF;
     lpn->insert_msg(msg24);
@@ -664,7 +666,7 @@ lpn_t* build_cpu1_write(void){
     msg24.pre_cfg = (1<<3);
     msg24.post_cfg = (1<<4);
     msg24.src = cache0;
-    msg24.dest = cpu0;
+    msg24.dest = membus;
     msg24.cmd = snp;
     msg24.addr = NDEF;
     lpn->insert_msg(msg24);
@@ -769,7 +771,7 @@ lpn_t* build_cpu0_read(void){
     msg24.pre_cfg = (1<<3);
     msg24.post_cfg = (1<<4);
     msg24.src = cache1;
-    msg24.dest = cpu1;
+    msg24.dest = membus;
     msg24.cmd = snp;
     msg24.addr = NDEF;
     lpn->insert_msg(msg24);
@@ -874,7 +876,7 @@ lpn_t* build_cpu0_write(void){
     msg24.pre_cfg = (1<<3);
     msg24.post_cfg = (1<<4);
     msg24.src = cache1;
-    msg24.dest = cpu1;
+    msg24.dest = membus;
     msg24.cmd = snp;
     msg24.addr = NDEF;
     lpn->insert_msg(msg24);
