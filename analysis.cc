@@ -58,6 +58,19 @@ struct scenario_t{
         write1=0;
         wb=0;
     }
+   
+    
+};
+
+struct active_list{
+    vector<int> rd0,rd1,wt0,wt1,wb;
+    active_list(){}
+    void sortall(){
+        sort(rd0.begin(),rd0.end());
+        sort(rd1.begin(),rd1.end());
+        sort(wt0.begin(),wt0.end());
+        sort(wt1.begin(),wt1.end());
+    }
     
 };
 //typedef vector<flow_instance_t> scenario_t;
@@ -95,13 +108,19 @@ void print_scenario(const vector<lpn_t*> flow_spec, const scenario_t& sce)
     vector<flow_instance_t> scen=sce.active_t;
 
     vector<uint32_t> flow_inst_cnt;
-    flow_inst_cnt.push_back(sce.write0);
     flow_inst_cnt.push_back(sce.read0);
-    flow_inst_cnt.push_back(sce.write1);
     flow_inst_cnt.push_back(sce.read1);
+    flow_inst_cnt.push_back(sce.write0);
+    flow_inst_cnt.push_back(sce.write1);
     flow_inst_cnt.push_back(sce.wb);
     
+    cout << "finished flow instances:" << endl;
+    for (uint32_t i = 0; i < flow_inst_cnt.size(); i++) {
+        lpn_t* flow = flow_spec.at(i);
+        cout << "\t" << flow->get_flow_name() << ": \t" << flow_inst_cnt.at(flow->get_index()) << endl;
+    }
     
+    cout<<"active flow specification states: "<<endl;
     for (uint32_t i = 0; i < scen.size(); i++) {
         const flow_instance_t& f = scen.at(i);
         uint32_t cfg = f.cfg;
@@ -125,7 +144,7 @@ void print_scenario(const vector<lpn_t*> flow_spec, const scenario_t& sce)
         cout << endl;
     }
     
-    cout << "***  # of flow instances:" << endl;
+    cout << "total flow instances:" << endl;
     for (uint32_t i = 0; i < flow_inst_cnt.size(); i++) {
         lpn_t* flow = flow_spec.at(i);
         cout << "\t" << flow->get_flow_name() << ": \t" << flow_inst_cnt.at(flow->get_index()) << endl;
@@ -136,11 +155,85 @@ void print_scenario(const vector<lpn_t*> flow_spec, const scenario_t& sce)
 
 std::hash<std::string> str_hash;
 
+active_list sort(vector<flow_instance_t> active_t){
+    uint32_t inde;
+    active_list sorted;
+
+ 
+    for(uint32_t i=0;i<active_t.size();i++){
+        inde=active_t.at(i).flow_inst->get_index();
+        if (inde==0)
+            sorted.rd0.push_back(active_t.at(i).cfg);
+        else if (inde ==1)
+            sorted.rd1.push_back(active_t.at(i).cfg);
+        else if (inde ==2)
+            sorted.wt0.push_back(active_t.at(i).cfg);
+        else if (inde ==3)
+            sorted.wt1.push_back(active_t.at(i).cfg);
+        else if (inde ==4)
+            sorted.wb.push_back(active_t.at(i).cfg);
+    }
+    sorted.sortall();
+        return sorted;
+        
+}
+
+
 bool equalscen(const scenario_t &x, const scenario_t &y){
     if(x.read0!=y.read0||x.read1!=y.read1||x.write0!=y.write0||x.write1!=y.write1)
         return false;
     if(x.active_t.size()!=y.active_t.size())
         return false;
+    active_list fi= sort(x.active_t);
+    active_list se= sort(y.active_t);
+    
+    if(fi.rd0.size()==se.rd0.size()){
+        for(uint32_t i=0;i<fi.rd0.size();i++){
+            if (fi.rd0.at(i)!=se.rd0.at(i))
+                return false;
+        }
+    }
+    else
+        return false;
+    
+    if(fi.rd1.size()==se.rd1.size()){
+        for(uint32_t i=0;i<fi.rd1.size();i++){
+            if (fi.rd1.at(i)!=se.rd1.at(i))
+                return false;
+        }
+    }
+    else
+        return false;
+    
+    if(fi.wt0.size()==se.wt0.size()){
+        for(uint32_t i=0;i<fi.wt0.size();i++){
+            if (fi.wt0.at(i)!=se.wt0.at(i))
+                return false;
+        }
+    }
+    else
+        return false;
+    
+    if(fi.wt1.size()==se.wt1.size()){
+        for(uint32_t i=0;i<fi.wt1.size();i++){
+            if (fi.wt1.at(i)!=se.wt1.at(i))
+                return false;
+        }
+    }
+    else
+        return false;
+
+    if(fi.wb.size()==se.wb.size()){
+        for(uint32_t i=0;i<fi.wb.size();i++){
+            if (fi.wb.at(i)!=se.wb.at(i))
+                return false;
+        }
+    }
+    else
+        return false;
+    
+    
+    /**
     for(uint32_t i=0;i<x.active_t.size();i++){
         if(x.active_t.at(i).flow_inst->get_flow_name()!=y.active_t.at(i).flow_inst->get_flow_name())
             return false;
@@ -150,9 +243,11 @@ bool equalscen(const scenario_t &x, const scenario_t &y){
         
         }
     
-    
+    **/
     return true;
 }
+
+
 vector<scenario_t> dscen(const vector<scenario_t> &vec){
 //sort( vec.begin(), vec.end() );
    // vec.erase(vec.begi
@@ -160,6 +255,7 @@ vector<scenario_t> dscen(const vector<scenario_t> &vec){
     rst.push_back(vec.at(0));
     for(uint32_t i=1;i<vec.size();i++){
         bool flag=true;
+        
         for(uint32_t j=0; j< rst.size(); j++){
             if(equalscen(vec.at(i),rst.at(j))==false);
             else{
@@ -374,7 +470,7 @@ int main(int argc, char *argv[]) {
                         if(flow_index==0)
                             new_scenario.read0++;
                         else if(flow_index==1)
-                            new_scenario.read0++;
+                            new_scenario.read1++;
                         else if(flow_index==2)
                             new_scenario.write0++;
                         else if(flow_index==3)
@@ -438,6 +534,7 @@ int main(int argc, char *argv[]) {
         << "***  Success -  the scenario that matches all messages is" << endl;
         s_stack=dscen(s_stack);
         for(uint32_t ctt=0;ctt<s_stack.size();ctt++){
+            cout<<"possiblity #"<<ctt<<endl;
             scenario_t good_scen = s_stack.at(ctt);
             print_scenario(flow_spec, good_scen);
             cout << endl;
