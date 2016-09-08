@@ -45,36 +45,16 @@ public:
     
     config_t accept(const message_t& other) const {
             const message_t& msg = msg_vector.at(0);
-            /*cout << "new message = " << other.toString() << "\t"
-            << "spec message = " << msg.toString() << "  " << msg.pre_cfg << " " <<init_cfg << endl;
-            if (msg.src == other.src && msg.dest == other.dest&& msg.cmd == other.cmd){// && msg.addr == other.addr) {
-//                && ((init_cfg & msg.pre_cfg) == msg.pre_cfg)) {
-                cout << "***  msg match " << msg.addr.size() << " " << other.addr.size() << endl;
-            }
-            */
-            if (msg.src == other.src && msg.dest == other.dest && msg.cmd == other.cmd && msg.addr == other.addr && ((init_cfg & msg.pre_cfg) == msg.pre_cfg))
+            if (msg.src == other.src && msg.dest == other.dest && msg.cmd == other.cmd && ((init_cfg & msg.pre_cfg) == msg.pre_cfg))
                 return msg.post_cfg;
                 return null_cfg;
     }
 
     
     config_t accept(const message_t& other, const config_t& cfg) const {
-        /**
-        cout<<"name "<<name<<endl;
-        cout<<"src "<<other.src<<endl;
-        cout<<"dest "<<other.dest<<endl;
-        cout<<"pre "<<cfg<<endl;
-        cout<<"cmd "<<other.cmd<<endl;
-        cout<<"now start comparing;"<<endl;
-        **/
         for (unsigned i=0; i<msg_vector.size(); i++) {
             const message_t& msg = msg_vector.at(i);
-            //cout<<i<<endl;
-            //cout<<"src "<<msg.src<<endl;
-            //cout<<"dest "<<msg.dest<<endl;
-            //cout<<"pre "<<msg.pre_cfg<<endl;
-            //cout<<"cmd "<<msg.cmd<<endl;
-            //out<<endl;
+ 
             if (msg.src == other.src && msg.dest == other.dest && msg.cmd == other.cmd  && ((cfg & msg.pre_cfg) == msg.pre_cfg)) {
                 if ((cfg & ~msg.pre_cfg & msg.post_cfg) != 0) {
                     cout << bitset<12>(cfg) << endl

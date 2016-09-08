@@ -24,8 +24,9 @@ const command_t rd = 1;
 const command_t wt = 2;
 const command_t snp =3;
 const command_t wb =4;
+const command_t pwr=5;
 
-string cmd_vector[5] = {"-", "rd", "wt", "snp", "wb"};
+string cmd_vector[6] = {"-", "rd", "wt", "snp", "wb","pwr"};
 
 // Define the ranges of memory address spaces.
 typedef uint32_t address_t;
@@ -96,7 +97,9 @@ public:
     
     std::string toString(void) const
     {
-        return blk_vector[src] + ":" +  blk_vector[dest] + ":" + cmd_vector[cmd] + ":" + addr_vector[addr];
+        char str[50];
+        sprintf( str, "%u", addr);
+        return blk_vector[src] + ":" +  blk_vector[dest] + ":" + cmd_vector[cmd] + ":" + str;
     }
 };
 

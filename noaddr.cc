@@ -157,33 +157,33 @@ void print_scenario(const vector<lpn_t*> flow_spec, const scenario_t& sce)
     flow_inst_cnt.push_back(sce.write1+sce.write1_ch);
     flow_inst_cnt.push_back(sce.wb0);
     flow_inst_cnt.push_back(sce.wb1);
-//    cout << "order of finishing:"<<endl;
-//    for (uint32_t oin=0; oin<sce.order_addr.size(); oin++) {
-//        uint32_t flw=sce.order_finish.at(oin);
-//        uint32_t adr=sce.order_addr.at(oin);
-//        if (flw==0)
-//            cout<<"read0: ";
-//        else if (flw==1)
-//            cout<<"read1: ";
-//        else if (flw==2)
-//            cout<<"wt0: ";
-//        else if (flw==3)
-//            cout<<"wt1: ";
-//        else if (flw==4)
-//            cout<<"wb0: ";
-//        else if (flw==5)
-//            cout<<"wb1: ";
-//        else if (flw==6)
-//            cout<<"rd0_cache: ";
-//        else if (flw==7)
-//            cout<<"rd1_cache: ";
-//        else if (flw==8)
-//            cout<<"wt0_cache: ";
-//        else if (flw==9)
-//            cout<<"wt1_cache: ";
-//        cout<<adr<<" "<<endl;
-//        
-//    }
+    cout << "order of finishing:"<<endl;
+    for (uint32_t oin=0; oin<sce.order_addr.size(); oin++) {
+        uint32_t flw=sce.order_finish.at(oin);
+        uint32_t adr=sce.order_addr.at(oin);
+        if (flw==0)
+            cout<<"read0: ";
+        else if (flw==1)
+            cout<<"read1: ";
+        else if (flw==2)
+            cout<<"wt0: ";
+        else if (flw==3)
+            cout<<"wt1: ";
+        else if (flw==4)
+            cout<<"wb0: ";
+        else if (flw==5)
+            cout<<"wb1: ";
+        else if (flw==6)
+            cout<<"rd0_cache: ";
+        else if (flw==7)
+            cout<<"rd1_cache: ";
+        else if (flw==8)
+            cout<<"wt0_cache: ";
+        else if (flw==9)
+            cout<<"wt1_cache: ";
+        cout<<adr<<" "<<endl;
+        
+    }
     cout << "finished flow instances:" << endl;
     cout << "\t cpu0 read: \t"<< sce.read0<<endl;
     cout << "\t cpu0 read active cache coheret protocol: \t"<< sce.read0_ch<<endl;

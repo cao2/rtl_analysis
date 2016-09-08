@@ -1,6 +1,7 @@
 OBJS = analysis.o
 OBJS1= partialObserve.o
 OBJS2= ambiguity.o
+OBJS3= noaddr.o
 SRC = $(OBJS:.o=.cc)
 
 
@@ -33,5 +34,9 @@ ambiguity: $(OBJS2)
 ambiguity.o: msg_def.h lpn.h ambiguity.cc
 	$(CC) $(CFLAGS) -c ambiguity.cc
 
+noaddr: $(OBJS3)
+	$(CC) $(CFLAGS) -o $@ $(OBJS3)
+noaddr.o: msg_def.h lpn.h noaddr.cc
+	$(CC) $(CFLAGS) -c noaddr.cc
 clean:
 	rm *.o

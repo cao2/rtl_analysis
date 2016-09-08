@@ -1,0 +1,4 @@
+cpu0:cache0:pwr:0
+cpu1:cache1:pwr:0
+cache0:membus:pwr:0
+cache1:membus:pwr:0
