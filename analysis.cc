@@ -387,6 +387,7 @@ string cfg_str_c(const uint32_t& xcfg){
 }
 
 int main(int argc, char *argv[]) {
+    uint32_t max=0;
     struct rusage usage;
     struct timeval start, end;
     getrusage(RUSAGE_SELF, &usage);
@@ -468,8 +469,8 @@ int main(int argc, char *argv[]) {
             break;
         }
        
-        if((tri%5==0 &&s_stack.size()>10)|| s_stack.size()>tri*tri*2){
-            
+        //if((tri%5==0 &&s_stack.size()>10)|| s_stack.size()>tri*tri*2){
+        if((tri%5==0 )|| s_stack.size()>tri*tri*2){
             cout<<"************************"<<endl;
             cout<<"dscen called, orig size "<<s_stack.size()<<endl;
             s_stack=dscen(s_stack);
@@ -482,6 +483,7 @@ int main(int argc, char *argv[]) {
         message_t msg(trace.at(tri));
         cout << tri<<"***  " << msg.toString() <<"  "<<s_stack.size() <<endl << endl;
         
+
         vector<scenario_t> new_s_stack;
         
         vector<config_t> flow_spec_flag;
@@ -571,6 +573,7 @@ int main(int argc, char *argv[]) {
                     //cout<<"new flow: "<< flow_spec.at(i)->get_flow_name() << "adds: "<< new_f.addr<<endl;
                 }
             }
+            
    
         }
         
@@ -588,7 +591,10 @@ int main(int argc, char *argv[]) {
         else{
             s_stack=new_s_stack;
         }
-        
+        if (s_stack.size()>max)
+        {
+            max= s_stack.size();
+        }
         cout << "======================================" << endl;
     }
     errorfile.close();
@@ -640,6 +646,7 @@ int main(int argc, char *argv[]) {
     printf("************************Memory usage = %ld KB\n",
            usage.ru_maxrss);
     printf("************************Time usage: %ld.%ds sec\n", end.tv_sec-start.tv_sec, end.tv_usec-start.tv_usec);
+    cout<<"Maximum number of flow instances: "<<max<<endl;
     return 0;
     
 }

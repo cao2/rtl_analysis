@@ -59,8 +59,8 @@ public:
                         new_msg.cmd =pwr;
                     else
                         new_msg.cmd = wt;
-                    //new_msg.addr = stol(tmp_str.substr(3,6));
-                    new_msg.addr=0;
+                    new_msg.addr = stol(tmp_str.substr(3,6));
+                    //new_msg.addr=0;
                     msg_file<<new_msg.toString()<<"\n";
                     trace.push_back(new_msg);
                     //cout<<new_msg.toString()<<endl;
@@ -89,8 +89,8 @@ public:
                             new_msg.cmd=wt;
                         //write to msg file
                         msg_file<<new_msg.toString()<<"\n";
-                        //new_msg.addr = stol(tmp_str.substr(3,6));
-                        new_msg.addr=0;
+                        new_msg.addr = stol(tmp_str.substr(3,6));
+                        //new_msg.addr=0;
                         trace.push_back(new_msg);
                         //cout<<new_msg.toString()<<endl;
                         num++;
@@ -103,8 +103,8 @@ public:
                     new_msg.dest = dests[17];
                     new_msg.cmd = wb;
                     msg_file<<new_msg.toString()<<"\n";
-                    //new_msg.addr = stol(tmp_str.substr(3,6));
-                    new_msg.addr=0;
+                    new_msg.addr = stol(tmp_str.substr(3,6));
+                    //new_msg.addr=0;
                     trace.push_back(new_msg);
                     //cout<<new_msg.toString()<<endl;
 

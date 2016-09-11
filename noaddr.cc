@@ -104,7 +104,7 @@ struct scenario_t{
         wb0=0;
         wb1=0;
     }
-   
+    
     
 };
 
@@ -149,7 +149,7 @@ active_list sort(vector<flow_instance_t> active_t){
 void print_scenario(const vector<lpn_t*> flow_spec, const scenario_t& sce)
 {
     vector<flow_instance_t> scen=sce.active_t;
-
+    
     vector<uint32_t> flow_inst_cnt;
     flow_inst_cnt.push_back(sce.read0+sce.read0_ch);
     flow_inst_cnt.push_back(sce.read1+sce.read1_ch);
@@ -157,33 +157,33 @@ void print_scenario(const vector<lpn_t*> flow_spec, const scenario_t& sce)
     flow_inst_cnt.push_back(sce.write1+sce.write1_ch);
     flow_inst_cnt.push_back(sce.wb0);
     flow_inst_cnt.push_back(sce.wb1);
-    cout << "order of finishing:"<<endl;
-    for (uint32_t oin=0; oin<sce.order_addr.size(); oin++) {
-        uint32_t flw=sce.order_finish.at(oin);
-        uint32_t adr=sce.order_addr.at(oin);
-        if (flw==0)
-            cout<<"read0: ";
-        else if (flw==1)
-            cout<<"read1: ";
-        else if (flw==2)
-            cout<<"wt0: ";
-        else if (flw==3)
-            cout<<"wt1: ";
-        else if (flw==4)
-            cout<<"wb0: ";
-        else if (flw==5)
-            cout<<"wb1: ";
-        else if (flw==6)
-            cout<<"rd0_cache: ";
-        else if (flw==7)
-            cout<<"rd1_cache: ";
-        else if (flw==8)
-            cout<<"wt0_cache: ";
-        else if (flw==9)
-            cout<<"wt1_cache: ";
-        cout<<adr<<" "<<endl;
-        
-    }
+    //    cout << "order of finishing:"<<endl;
+    //    for (uint32_t oin=0; oin<sce.order_addr.size(); oin++) {
+    //        uint32_t flw=sce.order_finish.at(oin);
+    //        uint32_t adr=sce.order_addr.at(oin);
+    //        if (flw==0)
+    //            cout<<"read0: ";
+    //        else if (flw==1)
+    //            cout<<"read1: ";
+    //        else if (flw==2)
+    //            cout<<"wt0: ";
+    //        else if (flw==3)
+    //            cout<<"wt1: ";
+    //        else if (flw==4)
+    //            cout<<"wb0: ";
+    //        else if (flw==5)
+    //            cout<<"wb1: ";
+    //        else if (flw==6)
+    //            cout<<"rd0_cache: ";
+    //        else if (flw==7)
+    //            cout<<"rd1_cache: ";
+    //        else if (flw==8)
+    //            cout<<"wt0_cache: ";
+    //        else if (flw==9)
+    //            cout<<"wt1_cache: ";
+    //        cout<<adr<<" "<<endl;
+    //
+    //    }
     cout << "finished flow instances:" << endl;
     cout << "\t cpu0 read: \t"<< sce.read0<<endl;
     cout << "\t cpu0 read active cache coheret protocol: \t"<< sce.read0_ch<<endl;
@@ -202,9 +202,9 @@ void print_scenario(const vector<lpn_t*> flow_spec, const scenario_t& sce)
     
     if(sce.active_t.size()!=0){
         cout<<"active flow specification states: "<<endl;
-    
+        
         active_list ac_l=sort(sce.active_t);
-    
+        
         cout<<"cpu0 read: ";
         for(uint32_t i=0;i<ac_l.rd0.size();i++){
             uint32_t cfg=ac_l.rd0.at(i);
@@ -213,7 +213,7 @@ void print_scenario(const vector<lpn_t*> flow_spec, const scenario_t& sce)
         }
         cout<<endl;
         
-    
+        
         cout<<"cpu1 read: ";
         for(uint32_t i=0;i<ac_l.rd1.size();i++){
             uint32_t cfg=ac_l.rd1.at(i);
@@ -221,31 +221,31 @@ void print_scenario(const vector<lpn_t*> flow_spec, const scenario_t& sce)
             flow_inst_cnt.at(1)++;
         }
         cout<<endl;
-    
-    
-    cout<<"cpu0 write: ";
-    for(uint32_t i=0;i<ac_l.wt0.size();i++){
-        uint32_t cfg=ac_l.wt0.at(i);
-        cout<<"<"<<state(cfg)<<">  ";
-        flow_inst_cnt.at(2)++;
-    }
-    cout<<endl;
-    
-    cout<<"cpu1 write: ";
-    for(uint32_t i=0;i<ac_l.wt1.size();i++){
-        uint32_t cfg=ac_l.wt1.at(i);
-        cout<<"<"<<state(cfg)<<">  ";
-        flow_inst_cnt.at(3)++;
-    }
-    cout<<endl;
-    
-    cout<<"write back_0: ";
-    for(uint32_t i=0;i<ac_l.wb0.size();i++){
-        uint32_t cfg=ac_l.wb0.at(i);
-        cout<<"<"<<state(cfg)<<">  ";
-        flow_inst_cnt.at(4)++;
-    }
-    cout<<endl;
+        
+        
+        cout<<"cpu0 write: ";
+        for(uint32_t i=0;i<ac_l.wt0.size();i++){
+            uint32_t cfg=ac_l.wt0.at(i);
+            cout<<"<"<<state(cfg)<<">  ";
+            flow_inst_cnt.at(2)++;
+        }
+        cout<<endl;
+        
+        cout<<"cpu1 write: ";
+        for(uint32_t i=0;i<ac_l.wt1.size();i++){
+            uint32_t cfg=ac_l.wt1.at(i);
+            cout<<"<"<<state(cfg)<<">  ";
+            flow_inst_cnt.at(3)++;
+        }
+        cout<<endl;
+        
+        cout<<"write back_0: ";
+        for(uint32_t i=0;i<ac_l.wb0.size();i++){
+            uint32_t cfg=ac_l.wb0.at(i);
+            cout<<"<"<<state(cfg)<<">  ";
+            flow_inst_cnt.at(4)++;
+        }
+        cout<<endl;
         
         cout<<"write back_1: ";
         for(uint32_t i=0;i<ac_l.wb1.size();i++){
@@ -254,13 +254,13 @@ void print_scenario(const vector<lpn_t*> flow_spec, const scenario_t& sce)
             flow_inst_cnt.at(5)++;
         }
         cout<<endl;
-
-    
-    cout << "total flow instances:" << endl;
-    for (uint32_t i = 0; i < flow_inst_cnt.size(); i++) {
-        lpn_t* flow = flow_spec.at(i);
-        cout << "\t" << flow->get_flow_name() << ": \t" << flow_inst_cnt.at(flow->get_index()) << endl;
-    }
+        
+        
+        cout << "total flow instances:" << endl;
+        for (uint32_t i = 0; i < flow_inst_cnt.size(); i++) {
+            lpn_t* flow = flow_spec.at(i);
+            cout << "\t" << flow->get_flow_name() << ": \t" << flow_inst_cnt.at(flow->get_index()) << endl;
+        }
     }
     cout << endl;
 }
@@ -310,7 +310,7 @@ bool equalact(const active_list &fi, const active_list &se){
     }
     else
         return false;
-
+    
     if(fi.wb0.size()==se.wb0.size()){
         for(uint32_t i=0;i<fi.wb0.size();i++){
             if (fi.wb0.at(i)!=se.wb0.at(i))
@@ -331,21 +331,21 @@ bool equalact(const active_list &fi, const active_list &se){
     
     //cout<<"return true";
     /**
-    for(uint32_t i=0;i<x.active_t.size();i++){
-        if(x.active_t.at(i).flow_inst->get_flow_name()!=y.active_t.at(i).flow_inst->get_flow_name())
-            return false;
-        
-        if(x.active_t.at(i).cfg!=y.active_t.at(i).cfg)
-            return false;
-        
-        }
-    
-    **/
+     for(uint32_t i=0;i<x.active_t.size();i++){
+     if(x.active_t.at(i).flow_inst->get_flow_name()!=y.active_t.at(i).flow_inst->get_flow_name())
+     return false;
+     
+     if(x.active_t.at(i).cfg!=y.active_t.at(i).cfg)
+     return false;
+     
+     }
+     
+     **/
     return true;
 }
 
 vector<scenario_t> dscen(const vector<scenario_t> &vec){
-
+    
     vector<scenario_t> rst;
     vector<active_list> ac_vec;
     vector<int> red;
@@ -387,6 +387,7 @@ string cfg_str_c(const uint32_t& xcfg){
 }
 
 int main(int argc, char *argv[]) {
+    uint32_t max=0;
     struct rusage usage;
     struct timeval start, end;
     getrusage(RUSAGE_SELF, &usage);
@@ -434,7 +435,7 @@ int main(int argc, char *argv[]) {
         vcd_msg* readmsg= new vcd_msg;
         readmsg->parse(argv[1]);
         trace = readmsg->getMsgs();
-    
+        
     }
     else{
         msgs* readmsg= new msgs;
@@ -467,9 +468,9 @@ int main(int argc, char *argv[]) {
             //break if a scenario is found to match all messages.
             break;
         }
-       
-        if((tri%5==0 &&s_stack.size()>10)|| s_stack.size()>tri*tri*2){
-            
+        
+        //if((tri%5==0 &&s_stack.size()>10)|| s_stack.size()>tri*tri*2){
+        if((tri%5==0 )|| s_stack.size()>tri*tri*2){
             cout<<"************************"<<endl;
             cout<<"dscen called, orig size "<<s_stack.size()<<endl;
             s_stack=dscen(s_stack);
@@ -481,6 +482,7 @@ int main(int argc, char *argv[]) {
         vector<scenario_t> tmp_s_stack=s_stack;
         message_t msg(trace.at(tri));
         cout << tri<<"***  " << msg.toString() <<"  "<<s_stack.size() <<endl << endl;
+        
         
         vector<scenario_t> new_s_stack;
         
@@ -495,19 +497,35 @@ int main(int argc, char *argv[]) {
             else
                 flow_spec_flag.push_back(99);
         }
-        
-        // Match the next message from trace against the current scenario.
+        bool flag_inorder=false;
+        vector<flow_instance_t> inst_set;
+         // Match the next message from trace against the current scenario.
         for(uint32_t ct=0;ct<s_stack.size();ct++)
         {
             scenario_t scenario = s_stack.at(ct);
             // Match the enw_msg against the existing flow instances.
             for (uint32_t i = 0; i < scenario.active_t.size(); i++) {
                 const flow_instance_t& f = scenario.active_t.at(i);
-                config_t new_cfg = f.flow_inst->accept(msg, f.cfg);
+                bool inst_flg=false;
+                for (uint32_t inst_ct=0; inst_ct<inst_set.size(); inst_ct++) {
+                    flow_instance_t tmp_inst=inst_set.at(inst_ct);
+                    if (tmp_inst.cfg==f.cfg && tmp_inst.flow_inst->get_index()==f.flow_inst->get_index()) {
+                        inst_flg=true;
+                    }
+                }
                 
-                //cout<<endl<< "flow in current : "<<f.flow_inst->get_flow_name()<<cfg_str_c(new_cfg)<<endl<<"f.addr= "<<f.addr<<endl<<endl;
+                
+                config_t new_cfg;
+                if (inst_flg==false) {
+                    inst_set.push_back(f);
+                    new_cfg = f.flow_inst->accept(msg, f.cfg);
+                }
+                else
+                    new_cfg = null_cfg;
+
                 
                 if ((new_cfg != null_cfg && f.addr == msg.addr)||(new_cfg != null_cfg && (f.flow_inst->get_index()==4 ||f.flow_inst->get_index()==5) )) {
+                    flag_inorder=true;
                     uint32_t flow_index = f.flow_inst->get_index();
                     scenario_t new_scenario = scenario;
                     string cfg_str=cfg_str_c(new_cfg);
@@ -571,7 +589,8 @@ int main(int argc, char *argv[]) {
                     //cout<<"new flow: "<< flow_spec.at(i)->get_flow_name() << "adds: "<< new_f.addr<<endl;
                 }
             }
-   
+            
+            
         }
         
         if (match == false) {
@@ -588,7 +607,10 @@ int main(int argc, char *argv[]) {
         else{
             s_stack=new_s_stack;
         }
-        
+        if (s_stack.size()>max)
+        {
+            max= s_stack.size();
+        }
         cout << "======================================" << endl;
     }
     errorfile.close();
@@ -603,9 +625,9 @@ int main(int argc, char *argv[]) {
                 "  Success -  the scenario that matches all messages is" << endl;
                 succ = true;
             }
-                cout<<"possiblity #"<<ctt<<endl;
-                print_scenario(flow_spec, good_scen);
-                cout << endl;
+            cout<<"possiblity #"<<ctt<<endl;
+            print_scenario(flow_spec, good_scen);
+            cout << endl;
             
             
         }
@@ -613,12 +635,12 @@ int main(int argc, char *argv[]) {
         if (succ == false)
             cout<<"non of the scenarios have finished all its flow"<<endl;
         /**
-            for(uint32_t ctt=0;ctt<s_stack.size();ctt++){
-                scenario_t good_scen = s_stack.at(ctt);
-                cout<<"possiblity #"<<ctt<<endl;
-                print_scenario(flow_spec, good_scen);
-                cout << endl;
-            }
+         for(uint32_t ctt=0;ctt<s_stack.size();ctt++){
+         scenario_t good_scen = s_stack.at(ctt);
+         cout<<"possiblity #"<<ctt<<endl;
+         print_scenario(flow_spec, good_scen);
+         cout << endl;
+         }
          **/
     }
     
@@ -640,6 +662,7 @@ int main(int argc, char *argv[]) {
     printf("************************Memory usage = %ld KB\n",
            usage.ru_maxrss);
     printf("************************Time usage: %ld.%ds sec\n", end.tv_sec-start.tv_sec, end.tv_usec-start.tv_usec);
+    cout<<"Maximum number of flow instances: "<<max<<endl;
     return 0;
     
 }
@@ -1086,7 +1109,7 @@ lpn_t* build_cpu0_write(void){
     msg30.dest = cpu0;
     msg30.cmd = wt;
     lpn->insert_msg(msg30);
-
+    
     message_t msg25;
     msg25.pre_cfg = (1<<4);
     msg25.post_cfg = (1<<5);

@@ -62,6 +62,7 @@ public:
                     << bitset<12>(msg.post_cfg) << endl;
                     assert(false);
                 }
+               
                 return (cfg & ~msg.pre_cfg) | msg.post_cfg;
             }
         }
