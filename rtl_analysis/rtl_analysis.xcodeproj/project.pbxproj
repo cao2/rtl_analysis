@@ -1,0 +1,104 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		3417D6C31D9F065A0073BE29 /* analysis */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = analysis; path = ../analysis; sourceTree = "<group>"; };
+		3417D6C41D9F065A0073BE29 /* analysis.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = analysis.cc; path = ../analysis.cc; sourceTree = "<group>"; };
+		3417D6C51D9F065A0073BE29 /* analysis.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = analysis.o; path = ../analysis.o; sourceTree = "<group>"; };
+		3417D6C61D9F065A0073BE29 /* comb */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = comb; path = ../comb; sourceTree = "<group>"; };
+		3417D6C71D9F065A0073BE29 /* combied.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = combied.cc; path = ../combied.cc; sourceTree = "<group>"; };
+		3417D6C81D9F065A0073BE29 /* erromsg.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = erromsg.txt; path = ../erromsg.txt; sourceTree = "<group>"; };
+		3417D6C91D9F065A0073BE29 /* lpn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = lpn.h; path = ../lpn.h; sourceTree = "<group>"; };
+		3417D6CA1D9F065A0073BE29 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = ../Makefile; sourceTree = "<group>"; };
+		3417D6CB1D9F065A0073BE29 /* mama */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = mama; path = ../mama; sourceTree = "<group>"; };
+		3417D6CC1D9F065A0073BE29 /* msg_def.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = msg_def.h; path = ../msg_def.h; sourceTree = "<group>"; };
+		3417D6CD1D9F065A0073BE29 /* msgs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = msgs.h; path = ../msgs.h; sourceTree = "<group>"; };
+		3417D6CE1D9F065A0073BE29 /* msgs.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = msgs.txt; path = ../msgs.txt; sourceTree = "<group>"; };
+		3417D6CF1D9F065A0073BE29 /* noaddr */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = noaddr; path = ../noaddr; sourceTree = "<group>"; };
+		3417D6D01D9F065A0073BE29 /* noaddr.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = noaddr.cc; path = ../noaddr.cc; sourceTree = "<group>"; };
+		3417D6D11D9F06640073BE29 /* vcd_msg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vcd_msg.h; path = ../vcd_msg.h; sourceTree = "<group>"; };
+		3417D6D21D9F06640073BE29 /* vcd_msgs.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = vcd_msgs.txt; path = ../vcd_msgs.txt; sourceTree = "<group>"; };
+		3417D6D31D9F06640073BE29 /* vcd_msgs.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = vcd_msgs.txt; path = ../vcd_msgs.txt; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		3417D6BC1D9F06080073BE29 = {
+			isa = PBXGroup;
+			children = (
+				3417D6D11D9F06640073BE29 /* vcd_msg.h */,
+				3417D6D21D9F06640073BE29 /* vcd_msgs.txt */,
+				3417D6D31D9F06640073BE29 /* vcd_msgs.txt */,
+				3417D6C31D9F065A0073BE29 /* analysis */,
+				3417D6C41D9F065A0073BE29 /* analysis.cc */,
+				3417D6C51D9F065A0073BE29 /* analysis.o */,
+				3417D6C61D9F065A0073BE29 /* comb */,
+				3417D6C71D9F065A0073BE29 /* combied.cc */,
+				3417D6C81D9F065A0073BE29 /* erromsg.txt */,
+				3417D6C91D9F065A0073BE29 /* lpn.h */,
+				3417D6CA1D9F065A0073BE29 /* Makefile */,
+				3417D6CB1D9F065A0073BE29 /* mama */,
+				3417D6CC1D9F065A0073BE29 /* msg_def.h */,
+				3417D6CD1D9F065A0073BE29 /* msgs.h */,
+				3417D6CE1D9F065A0073BE29 /* msgs.txt */,
+				3417D6CF1D9F065A0073BE29 /* noaddr */,
+				3417D6D01D9F065A0073BE29 /* noaddr.cc */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		3417D6BD1D9F06080073BE29 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+			};
+			buildConfigurationList = 3417D6C01D9F06080073BE29 /* Build configuration list for PBXProject "rtl_analysis" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3417D6BC1D9F06080073BE29;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		3417D6C11D9F06080073BE29 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		3417D6C21D9F06080073BE29 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3417D6C01D9F06080073BE29 /* Build configuration list for PBXProject "rtl_analysis" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3417D6C11D9F06080073BE29 /* Debug */,
+				3417D6C21D9F06080073BE29 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3417D6BD1D9F06080073BE29 /* Project object */;
+}

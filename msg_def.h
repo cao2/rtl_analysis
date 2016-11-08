@@ -16,7 +16,9 @@ const uint16_t cpu1 = 3;
 const uint16_t cache1 = 4;
 const uint16_t membus = 5;
 const uint16_t mem = 6;
-string blk_vector[9] = {"-", "cpu0", "cache0", "cpu1", "cache1", "membus","mem"};
+const uint16_t bus0 =7;
+const uint16_t bus1 =8;
+string blk_vector[9] = {"-", "cpu0", "cache0", "cpu1", "cache1", "membus","mem","bus0","bus1"};
 
 // Define commands
 typedef uint16_t command_t;
