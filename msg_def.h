@@ -18,7 +18,8 @@ const uint16_t membus = 5;
 const uint16_t mem = 6;
 const uint16_t bus0 =7;
 const uint16_t bus1 =8;
-string blk_vector[9] = {"-", "cpu0", "cache0", "cpu1", "cache1", "membus","mem","bus0","bus1"};
+const uint16_t pwr=9;
+string blk_vector[10] = {"-", "cpu0", "cache0", "cpu1", "cache1", "membus","mem","bus0","bus1","pwr"};
 
 // Define commands
 typedef uint16_t command_t;
@@ -26,9 +27,10 @@ const command_t rd = 1;
 const command_t wt = 2;
 const command_t snp =3;
 const command_t wb =4;
-const command_t pwr=5;
+const command_t pwron=5;
+const command_t pwroff=6;
 
-string cmd_vector[6] = {"-", "rd", "wt", "snp", "wb","pwr"};
+string cmd_vector[7] = {"-", "rd", "wt", "snp", "wb","pwr_on","pwr_off"};
 
 // Define the ranges of memory address spaces.
 typedef uint32_t address_t;

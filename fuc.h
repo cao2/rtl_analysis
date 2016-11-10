@@ -427,6 +427,49 @@ string cfg_str_c(const uint32_t& xcfg){
 
 
 //write_back flow
+lpn_t* build_pwrongfx(void){
+    lpn_t* lpn = new lpn_t;
+    
+    lpn->set_flow_name("**** gfx pwr on******");
+    
+    message_t msg2;
+    msg2.pre_cfg = (1<<0);
+    msg2.post_cfg = (1 << 1);
+    msg2.src = bus;
+    msg2.dest = pwr;
+    msg2.cmd = pwron;
+    lpn->insert_msg(msg2);
+    
+    message_t msg15;
+    msg15.pre_cfg = (1<<1);
+    msg15.post_cfg = (1 << 2);
+    msg15.src = pwr;
+    msg15.dest = gfx;
+    msg15.cmd = pwron;
+    lpn->insert_msg(msg15);
+    
+    message_t msg16;
+    msg16.pre_cfg = (1<<2);
+    msg16.post_cfg = (1 << 3);
+    msg16.src = gfx;
+    msg16.dest = pwr;
+    msg16.cmd = pwron;
+    lpn->insert_msg(msg16);
+    
+    message_t msg3;
+    msg3.pre_cfg = (1<<2);
+    msg3.post_cfg = (1 << 3);
+    msg3.src = pwr;
+    msg3.dest = bus;
+    msg3.cmd = pwron;
+    lpn->insert_msg(msg3);
+    
+    
+    lpn->set_init_cfg(1<<0);
+    
+    return lpn;
+}
+
 lpn_t* build_wb1(void){
     lpn_t* lpn = new lpn_t;
     
