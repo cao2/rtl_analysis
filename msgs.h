@@ -207,11 +207,57 @@ public:
                 linenm++;
                 uint32_t state=0;
                 
-                for (uint32_t i = 0; i < line.size(); i++)
-                    if (line.at(i) == ',') {
-                        pl[state] = i;
-                        state++;
+                uint16_t ind=0;
+                string buf;
+                stringstream ss(line);
+                
+                while (ss >> buf){
+                    if (buf.size()>51)
+                        buf=buf.substr(buf.size()-51);
+                    if (buf.size()==51&&buf.at(0)=='1'){
+                        new_msg.src=srcs[ind];
+                        new_msg.src=dests[ind];
+                        if (ind==10 or ind==11 or ind==12 or ind==13)
+                            new_msg.cmd=snp;
+                        else if (ind==8 or ind==9 or ind==16 )
+                            new_msg.cmd=wb;
+                        else if(buf.substr(1,2)=="10")
+                            new_msg.cmd=rd;
+                        else if(buf.substr(1,2)=="11")
+                            new_msg.cmd=pwron;
+                        else if(buf.substr(1,2)=="00")
+                            new_msg.cmd=pwroff;
+                        else
+                            new_msg.cmd=wt;
+                        new_msg.addr= stol(buf.substr(3,6));
+                        msg_file<<new_msg.toString()<<"\n";
+                        trace.push_back(new_msg);
+                        num++;
                     }
+                    else if (buf.size()==1 && buf.at(0)=='1'){
+                        new_msg.src=srcs[ind];
+                        new_msg.dest=dests[ind];
+                        new_msg.cmd=wb;
+                        msg_file<<new_msg.toString()<<"\n";
+                        trace.push_back(new_msg);
+                        num++;
+                    }
+                    else if ((buf.size()==3 || buf.size==5 )&& buf.at(0)=='1'){
+                        new_msg.src=srcs[ind];
+                        new_msg.dest=dests[ind];
+                        if (buf.substr(1,2)=="00")
+                            new_msg.cmd=pwroff;
+                        else
+                            new_msg.cmd=pwron;
+                        msg_file<<new_msg.toString()<<"\n";
+                        trace.push_back(new_msg);
+                        num++;
+                    }
+                    else
+                        cout<<"singal length not find "<<endl;
+                    ind++;
+                }
+                /**
                 //cout<<endl<<line<<endl;
                 uint32_t j =0;
                 string tmp_str = line.substr(0, 52);
@@ -279,7 +325,7 @@ public:
                     num++;
 
                 }
-                
+                **/
             }
             cout<<"finished"<<endl;
             trace_file.close();
